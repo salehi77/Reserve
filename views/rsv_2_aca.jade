@@ -1,0 +1,103 @@
+doctype html
+html
+  head
+    title= title
+    //- link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content
+      p مرحله دوم- ثبت اطلاعات
+      form(method='POST', action='rsv?step=3')
+        fieldset#personal-info
+          legend مشخصات متقاضی
+          label(for='firstname') نام:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          input(type='text', name='firstname')
+          
+          br
+
+          label(for='lastname') نام خانوادگی:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          input(type='text', name='lastname')
+
+          br
+
+          label(for='employee-number') شماره دانشجویی/کارمندی/استادی:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          input(type='text', name='employee-number')
+          
+          br
+
+          label(for='tel-number') شماره تلفن:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          input(type='text', name='tel-number')
+
+          br
+
+          label(for='mob-number') شماره همراه:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          input(type='text', name='mob-number')
+
+        fieldset#plan-info
+          legend مشخصات برنامه
+          label(for='subject') موضوع:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          input(type='text', name='subject')
+          
+          br
+
+          label(for='level') سطح برنامه:
+          br
+          input(type="radio", name="level", value="int")
+          | بین المللی
+          input(type="radio", name="level", value="nat")
+          | ملی
+          input(type="radio", name="level", value="reg")
+          | منطقه ای
+          input(type="radio", name="level", value="prov")
+          | استانی
+          input(type="radio", name="level", value="oth")
+          | سایر
+
+          br
+
+
+          label(for='sponser-name') نام اسپانسر:
+          input(type='text', name='sponser-name')
+
+          br
+
+          label(for='sponser-tel') تلفن اسپانسر:
+          input(type='text', name='sponser-tel')
+
+        fieldset#summary-info
+          legend چکیده محتوای همایش
+          label(for='summarغ') حداکثر 350 کاراکتر:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          textarea(name="summury", cols="50", rows="4")
+          
+          br
+
+        fieldset#guest-info
+          legend اطلاعات مهمانان
+          label(for='tot-guest') تعداد مهمانان:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          input(type='text', name='tot-guest')
+
+          br
+
+          label(for='ac-guest') تعداد مهمانان دانشگاهی:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          input(type='text', name='ac-guest')
+
+          br
+
+          label(for='nac-guest') تعداد مهمانان خارج از دانشگاه:
+            span(style='font-size:26px;color:red;font-weight:bold') *
+          input(type='text', name='nac-guest')
+
+        br
+
+        input(type='submit', value='مرحله بعد')
+        
+
+      a(href="rsv?step=1") مرحله قبل

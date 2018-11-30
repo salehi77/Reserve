@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content
+      table
+        tr
+          th name
+          th type
+          th capacity
+        for doc in docs
+          tr
+            td= doc.name
+            td= doc.type
+            td= doc.capacity

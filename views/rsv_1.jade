@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= title
+    //- link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="/javascripts/jquery-3.3.1.min.js")
+    script(src="/javascripts/rsv_1.js")
+  body
+    block content
+      p مرحله اول- متقاضی دانشگاهی/خارج از دانشگاه
+      form(method='POST', action='rsv?step=2')
+        input(type="radio", name="academic", value="academic" checked='checked')
+        | متقاضی داخل دانشگاه
+        br
+        input(type="radio", name="academic", value="non-academic")
+        | متقاضی خارج از دانشگاه
+        br
+        input(type='submit', value='مرحله بعد')
+
+      br
+
+      p(id="err_msg")
