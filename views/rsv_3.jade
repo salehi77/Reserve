@@ -28,6 +28,16 @@ html
               td=doc.datashow
               td
                 input(type='radio', name='placeID', value=doc.ID,required='required')
+              td
+                input.hourFrom(id='hf'+doc.ID, type='number', value='8', min='8', max='20')
+                span :
+                input.minFrom(id='mf'+doc.ID,type='number', value='0', min='0', max='45', step="15")
+                تا
+                input.hourTo(id='ht'+doc.ID, type='number', value='9', min='8', max='20')
+                span :
+                input.minTo(id='mt'+doc.ID,type='number', value='0', min='0', max='45', step="15")
+              td
+                span.wrongTime(id='wt'+doc.ID)
 
         
         br

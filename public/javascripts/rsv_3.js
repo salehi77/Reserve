@@ -36,10 +36,35 @@ $(function() {
     };
 
     $.post("/getReservedTimes", { placeID, dateToReserve }, function(times) {
-      console.log(times);
-      // for (var i = 0; i < times.length; ++i) {
-      //   console.log(times[i]);
-      // }
+      // console.log(times);
+      var placeID = $("input[name=placeID]:checked").val();
+      var hourFrom = parseInt($(".hourFrom#hf" + placeID).val());
+      var minFrom = parseInt($(".minFrom#mf" + placeID).val());
+      var hourTo = parseInt($(".hourTo#ht" + placeID).val());
+      var minTo = parseInt($(".minTo#mt" + placeID).val());
+      var valFrom = hourFrom * 3600 + minFrom * 60;
+      var valTo = hourTo * 3600 + minTo * 60;
+
+      if (valFrom < valTo) {
+        $(".wrongTime").text("");
+
+        for (var i = 0; i < times.length; ++i) {
+          console.log(times[i]);
+          var valFromReserved =
+            parseInt(times[i].hourFrom) * 3600 +
+            parseInt(times[i].minFrom) * 60;
+          var valToReserved =
+            parseInt(times[i].hourTo) * 3600 + parseInt(times[i].minTo) * 60;
+          console.log(valFromReserved + "   " + valToReserved);
+        }
+      } else {
+        $(".wrongTime").text("");
+        $("#wt" + placeID).text("wrong time");
+      }
+      // console.log(hourFrom);
+      // console.log(minFrom);
+      // console.log(hourto);
+      // console.log(minTo);
     });
 
     // console.log(dateToReserve.format("dddd, MMMM DD YYYY, h:mm:ss a"));
