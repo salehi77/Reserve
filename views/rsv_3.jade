@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title= title
+    //- link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/persian-datepicker.min.css')
+    script(src="/javascripts/jquery.min.js")
+    script(src="/javascripts/persian-date.min.js")
+    script(src="/javascripts/persian-datepicker.min.js")
+    script(src="/javascripts/rsv_3.js")
+  body
+    block content
+      p مرحله سوم- ثبت مکان
+      input#datepicker(type='text')
+      input#datepickerValue(type='hidden')
+      form(method='POST', action='rsv?step=4')
+        table
+          tr
+            th نام
+            th نوع
+            th ظرفیت
+            th دیتاشو
+          for doc in docs
+            tr
+              td=doc.name
+              td=doc.type
+              td=doc.capacity
+              td=doc.datashow
+              td
+                input(type='radio', name='placeID', value=doc.ID,required='required')
+
+        
+        br
+
+        input(type='submit', value='مرحله بعد')
+        
+
+      a#backStep(href="rsv?step=2") مرحله قبل

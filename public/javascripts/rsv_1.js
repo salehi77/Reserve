@@ -1,9 +1,7 @@
 $(function() {
   setRequestID = false;
   $("form").submit(function() {
-    console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzz");
     academic = $("input[name=academic]:checked").val();
-    // alert("dksfhskdjf");
     if (academic) {
       if (!setRequestID) {
         $.get("/submit-request", function(data) {
