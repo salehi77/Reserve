@@ -55,7 +55,10 @@ const Request = mongoose.model("Request", {
   placeID: {
     type: String
   },
-  dateTime: {
+  date: {
+    type: Object
+  },
+  time: {
     type: Object
   },
   followCode: {
@@ -183,10 +186,65 @@ router.post("/rsv", (req, res) => {
         }
       );
       break;
+    case "4":
+      var followCode = Math.floor(Math.random() * 100000) + 10000;
+      Request.findOneAndUpdate(
+        { ID: req.query.requestID },
+        {
+          $set: {
+            placeID: req.body.placeID,
+            followCode,
+            date: {
+              year: req.body.year,
+              month: req.body.month,
+              date: req.body.date
+            },
+            time: {
+              hourFrom: req.body.hourFrom,
+              minFrom: req.body.minFrom,
+              hourTo: req.body.hourTo,
+              minTo: req.body.minTo
+            }
+          }
+        }
+      )
+        .then(doc => {
+          let newReservedTime = new ReservedTime({
+            placeID: req.body.placeID,
+            requestID: req.query.requestID,
+            date: {
+              year: req.body.year,
+              month: req.body.month,
+              date: req.body.date
+            },
+            time: {
+              hourFrom: req.body.hourFrom,
+              minFrom: req.body.minFrom,
+              hourTo: req.body.hourTo,
+              minTo: req.body.minTo
+            }
+          });
+
+          newReservedTime
+            .save()
+            .then(doc => {
+              // res.redirect("/rsv?step=4&requestID=" + req.query.requestID);
+              res.render("rsv_4", { followCode });
+            })
+            .catch(err => {
+              console.error(err);
+              res.send(400).send(err);
+            });
+        })
+        .catch(err => {
+          console.error(err);
+          res.send(400).send(err);
+        });
+      break;
   }
 });
 
-router.post("/getReservedTimes", (req, res) => {
+router.post("/checkReservedTimes", (req, res) => {
   // console.log(req.body);
   var dateToReserve = {
     year: req.body["dateToReserve[year]"],
@@ -196,11 +254,34 @@ router.post("/getReservedTimes", (req, res) => {
   ReservedTime.find({ placeID: req.body.placeID, date: dateToReserve })
     .select("time -_id")
     .then(docs => {
-      var newdocs = [];
-      for (var i = 0; i < docs.length; ++i) {
-        newdocs.push(docs[i].time);
+      var fromTime1 =
+        parseInt(req.body["timeToReserve[hourFrom]"]) * 3600 +
+        parseInt(req.body["timeToReserve[minFrom]"]) * 60;
+      var toTime1 =
+        parseInt(req.body["timeToReserve[hourTo]"]) * 3600 +
+        parseInt(req.body["timeToReserve[minTo]"]) * 60;
+      if (fromTime1 >= toTime1) {
+        res.send({ reserved: false, wrongTime: true });
+        return;
       }
-      res.send(newdocs);
+      var sendToUser = true;
+      for (var i = 0; i < docs.length; ++i) {
+        var fromTime2 =
+          parseInt(docs[i].time.hourFrom) * 3600 +
+          parseInt(docs[i].time.minFrom) * 60;
+        var toTime2 =
+          parseInt(docs[i].time.hourTo) * 3600 +
+          parseInt(docs[i].time.minTo) * 60;
+
+        if (
+          (fromTime1 >= fromTime2 && fromTime1 < toTime2) ||
+          (toTime1 <= toTime2 && toTime1 > fromTime2)
+        ) {
+          res.send({ reserved: true, wrongTime: false });
+          return;
+        }
+      }
+      res.send({ reserved: false, wrongTime: false });
     })
     .catch(err => {
       console.log(err);
