@@ -19,13 +19,35 @@ html
             th نام
             th نوع
             th ظرفیت
-            th دیتاشو
+            th پروژکتور
+            th کامپیوتر
+            th تخته
+            th وای فای
           for doc in docs
             tr
               td=doc.name
               td=doc.type
               td=doc.capacity
-              td=doc.datashow
+              td
+                if doc.equipment.projector
+                  = 'دارد'
+                else
+                  = 'ندارد'
+              td
+                if doc.equipment.computer
+                  = 'دارد'
+                else
+                  = 'ندارد'
+              td
+                if doc.equipment.board
+                  = 'دارد'
+                else
+                  = 'ندارد'
+              td
+                if doc.equipment.wifi
+                  = 'دارد'
+                else
+                  = 'ندارد'
               td
                 input(type='radio', name='placeID', value=doc.ID,required='required')
               td

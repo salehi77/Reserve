@@ -9,15 +9,21 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/place_list", (req, res) => {
-  Place.find({}).then(
-    docs => {
-      res.render("place-list", { docs });
-    },
-    err => {
-      console.error("error");
-      res.status(400).send("error");
-    }
-  );
+  res.render("place-list");
+});
+
+router.get("/getPlaces", (req, res) => {
+  Place.find({})
+    .select("-_id -ID")
+    .then(
+      docs => {
+        res.send({ error: null, places: docs });
+      },
+      err => {
+        console.error("error");
+        res.status(400).send({ error: err });
+      }
+    );
 });
 
 router.get("/login", (req, res) => {

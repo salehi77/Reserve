@@ -2,16 +2,62 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    //- link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="/javascripts/jquery.min.js")
+    script(src="/javascripts/place-list.js")
   body
     block content
-      table
-        tr
-          th name
-          th type
-          th capacity
-        for doc in docs
-          tr
-            td= doc.name
-            td= doc.type
-            td= doc.capacity
+      //- input#projector(type='checkbox')
+      span پروژکتور: 
+      select.changeAble(name='projector')
+        option(value="all") همه
+        option(value="true") دارد
+        option(value="false") ندارد
+      br
+      span کامپیوتر: 
+      select.changeAble(name='computer')
+        option(value="all") همه
+        option(value="true") دارد
+        option(value="false") ندارد
+      br
+      span تخته: 
+      select.changeAble(name='board')
+        option(value="all") همه
+        option(value="true") دارد
+        option(value="false") ندارد
+      br
+      span وایفای: 
+      select.changeAble(name='wifi')
+        option(value="all") همه
+        option(value="true") دارد
+        option(value="false") ندارد
+      br
+
+
+      table#places
+
+        //- for doc in docs
+        //-   tr
+        //-     td=doc.name
+        //-     td=doc.type
+        //-     td=doc.capacity
+        //-     td
+        //-       if doc.equipment.projector
+        //-         = 'دارد'
+        //-       else
+        //-         = 'ندارد'
+        //-     td
+        //-       if doc.equipment.computer
+        //-         = 'دارد'
+        //-       else
+        //-         = 'ندارد'
+        //-     td
+        //-       if doc.equipment.board
+        //-         = 'دارد'
+        //-       else
+        //-         = 'ندارد'
+        //-     td
+        //-       if doc.equipment.wifi
+        //-         = 'دارد'
+        //-       else
+        //-         = 'ندارد'

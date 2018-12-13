@@ -14,8 +14,19 @@ const Place = mongoose.model("Place", {
   capacity: {
     type: Number
   },
-  datashow: {
-    type: String
+  equipment: {
+    projector: {
+      type: Boolean
+    },
+    computer: {
+      type: Boolean
+    },
+    board: {
+      type: Boolean
+    },
+    wifi: {
+      type: Boolean
+    }
   }
 });
 
