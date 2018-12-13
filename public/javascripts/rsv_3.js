@@ -1,8 +1,9 @@
 $(function() {
   var urlParams = new URLSearchParams(window.location.search);
-  $("form").attr(
+  var formAction = $("#reserveFormStep3").attr("action");
+  $("#reserveFormStep3").attr(
     "action",
-    "/rsv?step=4&requestID=" + urlParams.get("requestID")
+    formAction + "&requestID=" + urlParams.get("requestID")
   );
 
   $("#backStep").attr(
@@ -26,7 +27,7 @@ $(function() {
 
   var isSent = false;
 
-  $("form").submit(function() {
+  $("#reserveFormStep3").submit(function() {
     if (!isSent) {
       var placeID = $("input[name=placeID]:checked").val();
       var dateToReserve = new persianDate().unix(
@@ -46,7 +47,7 @@ $(function() {
       };
 
       $.post(
-        "/checkReservedTimes",
+        "/reserveProc/checkReservedTimes",
         { placeID, dateToReserve, timeToReserve },
         function(data) {
           $(".wrongTime").text("");
@@ -76,7 +77,7 @@ $(function() {
             $(".minFrom#mf" + placeID).attr("name", "minFrom");
             $(".hourTo#ht" + placeID).attr("name", "hourTo");
             $(".minTo#mt" + placeID).attr("name", "minTo");
-            $("form").submit();
+            $("#reserveFormStep3").submit();
           } else {
             $(".wrongTime").text("");
             var placeID = $("input[name=placeID]:checked").val();

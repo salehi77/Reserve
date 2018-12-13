@@ -1,7 +1,8 @@
 $(function() {
   var urlParams = new URLSearchParams(window.location.search);
-  $("form").attr(
+  var formAction = $("form").attr("action");
+  $("#reserveFormStep2").attr(
     "action",
-    "/rsv?step=3&requestID=" + urlParams.get("requestID")
+    formAction + "&requestID=" + urlParams.get("requestID")
   );
 });

@@ -3,8 +3,12 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const mongoose = require("mongoose");
+
+require("./database/connection");
 
 var indexRouter = require("./routes/index");
+var reserveProcRouter = require("./routes/reserveProc");
 
 var app = express();
 
@@ -12,13 +16,21 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
-app.use(logger("dev"));
+// app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// app.use(function(req, res, next) {
+//   var fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+//   console.log(fullUrl);
+//   console.log(req.body);
+//   next();
+// });
+
 app.use("/", indexRouter);
+app.use("/reserveProc", reserveProcRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

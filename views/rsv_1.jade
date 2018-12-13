@@ -7,8 +7,8 @@ html
     script(src="/javascripts/rsv_1.js")
   body
     block content
-      p مرحله اول- متقاضی دانشگاهی/خارج از دانشگاه
-      form(method='POST', action='rsv?step=2')
+      p.stepHeader مرحله اول- متقاضی دانشگاهی/خارج از دانشگاه
+      form.reserveForm#reserveFormStep1(method='POST',action='/reserveProc/rsv?step=2')
         input(type="radio", name="academic", value="academic" checked='checked')
         | متقاضی داخل دانشگاه
         br

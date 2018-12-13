@@ -13,7 +13,7 @@ html
       p مرحله سوم- ثبت مکان
       input#datepicker(type='text')
       input#datepickerValue(type='hidden')
-      form(method='POST', action='rsv?step=4')
+      form.reserveForm#reserveFormStep3(method='POST', action='/reserveProc/rsv?step=4')
         table
           tr
             th نام

@@ -8,7 +8,7 @@ html
   body
     block content
       p مرحله دوم- ثبت اطلاعات
-      form(method='POST', action='rsv?step=3')
+      form.reserveForm#reserveFormStep2(method='POST', action='/reserveProc/rsv?step=3')
         fieldset#personal-info
           legend مشخصات متقاضی
           label(for='firstname') نام:
