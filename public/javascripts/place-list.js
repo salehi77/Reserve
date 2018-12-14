@@ -74,14 +74,14 @@ $(function() {
           switch (capacitySelect) {
             case "1":
               capacity.push(0);
-              capacity.push(40);
+              capacity.push(50);
               break;
             case "2":
-              capacity.push(40);
-              capacity.push(60);
+              capacity.push(50);
+              capacity.push(80);
               break;
             case "3":
-              capacity.push(60);
+              capacity.push(80);
               capacity.push(100);
               break;
             case "4":

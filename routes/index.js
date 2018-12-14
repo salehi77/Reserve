@@ -8,7 +8,7 @@ router.get("/", function(req, res, next) {
   res.sendFile(path.join(__dirname, "../public/home.html"));
 });
 
-router.get("/place_list", (req, res) => {
+router.get("/place-list", (req, res) => {
   res.render("place-list");
 });
 
