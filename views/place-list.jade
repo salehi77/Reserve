@@ -7,57 +7,38 @@ html
     script(src="/javascripts/place-list.js")
   body
     block content
-      //- input#projector(type='checkbox')
       span پروژکتور: 
       select.changeAble(name='projector')
         option(value="all") همه
-        option(value="true") دارد
-        option(value="false") ندارد
+        option(value="1") دارد
+        option(value="0") ندارد
       br
       span کامپیوتر: 
       select.changeAble(name='computer')
         option(value="all") همه
-        option(value="true") دارد
-        option(value="false") ندارد
+        option(value="1") دارد
+        option(value="0") ندارد
       br
       span تخته: 
       select.changeAble(name='board')
         option(value="all") همه
-        option(value="true") دارد
-        option(value="false") ندارد
+        option(value="1") دارد
+        option(value="0") ندارد
       br
       span وایفای: 
       select.changeAble(name='wifi')
         option(value="all") همه
-        option(value="true") دارد
-        option(value="false") ندارد
+        option(value="1") دارد
+        option(value="0") ندارد
+      br
+      span ظرفیت: 
+      select.changeAble(name='capacity')
+        option(value="all") همه
+        option(value="1") کمتر از 40
+        option(value="2") بین 40 تا 60
+        option(value="3") بین 60 تا 100
+        option(value="4") بیشتر از 100
       br
 
 
       table#places
-
-        //- for doc in docs
-        //-   tr
-        //-     td=doc.name
-        //-     td=doc.type
-        //-     td=doc.capacity
-        //-     td
-        //-       if doc.equipment.projector
-        //-         = 'دارد'
-        //-       else
-        //-         = 'ندارد'
-        //-     td
-        //-       if doc.equipment.computer
-        //-         = 'دارد'
-        //-       else
-        //-         = 'ندارد'
-        //-     td
-        //-       if doc.equipment.board
-        //-         = 'دارد'
-        //-       else
-        //-         = 'ندارد'
-        //-     td
-        //-       if doc.equipment.wifi
-        //-         = 'دارد'
-        //-       else
-        //-         = 'ندارد'

@@ -41,24 +41,25 @@ $(function() {
       $(".changeAble").on("change", data, function(event) {
         var newData = event.data.slice();
 
-        var projectorSelect = $("select[name=projector]");
-        var computerSelect = $("select[name=computer]");
-        var boardSelect = $("select[name=board]");
-        var wifiSelect = $("select[name=wifi]");
-
-        var arrarr = [projectorSelect, computerSelect, boardSelect, wifiSelect];
+        var features = [
+          $("select[name=projector]"),
+          $("select[name=computer]"),
+          $("select[name=board]"),
+          $("select[name=wifi]")
+        ];
 
         var counterDeleted = 0;
         for (var i = 0; i < event.data.length; ++i) {
-          for (var j = 0; j < arrarr.length; ++j) {
-            var varivari = arrarr[j];
+          for (var j = 0; j < features.length; ++j) {
+            var feature = features[j];
 
-            if ($(varivari).val() == "all") {
+            if ($(feature).val() == "all") {
               continue;
             }
+
             if (
-              event.data[i].equipment[$(varivari).attr("name")].toString() !=
-              $(varivari).val()
+              event.data[i].equipment[$(feature).attr("name")] !=
+              parseInt($(feature).val())
             ) {
               newData.splice(i - counterDeleted, 1);
               counterDeleted++;
@@ -66,73 +67,43 @@ $(function() {
             }
           }
         }
+        var capacitySelect = $("select[name=capacity]").val();
+
+        if (!(capacitySelect == "all")) {
+          var capacity = [];
+          switch (capacitySelect) {
+            case "1":
+              capacity.push(0);
+              capacity.push(40);
+              break;
+            case "2":
+              capacity.push(40);
+              capacity.push(60);
+              break;
+            case "3":
+              capacity.push(60);
+              capacity.push(100);
+              break;
+            case "4":
+              capacity.push(100);
+              capacity.push(5000);
+              break;
+          }
+
+          for (var i = 0; i < newData.length; ++i) {
+            if (
+              !(
+                newData[i].capacity >= capacity[0] &&
+                newData[i].capacity < capacity[1]
+              )
+            ) {
+              newData.splice(i, 1);
+              --i;
+            }
+          }
+        }
         fillTable(newData);
       });
-
-      // $("#projectorSelect").on("change", data, function(event) {
-      //   var selectVal = this.value;
-      //   if (selectVal == "all") {
-      //     fillTable(event.data);
-      //   } else {
-      //     selectVal = selectVal == "true" ? true : false;
-      //     var newData = [];
-      //     for (var i = 0; i < event.data.length; ++i) {
-      //       if (event.data[i].equipment.projector == selectVal) {
-      //         newData.push(event.data[i]);
-      //       }
-      //     }
-      //     fillTable(newData);
-      //   }
-      // });
-      // $("#computerSelect").on("change", data, function(event) {
-      //   var selectVal = this.value;
-      //   if (selectVal == "all") {
-      //     fillTable(event.data);
-      //   } else {
-      //     selectVal = selectVal == "true" ? true : false;
-      //     var newData = [];
-      //     for (var i = 0; i < event.data.length; ++i) {
-      //       if (event.data[i].equipment.computer == selectVal) {
-      //         newData.push(event.data[i]);
-      //       }
-      //     }
-      //     fillTable(newData);
-      //   }
-      // });
-      // $("#boardSelect").on("change", data, function(event) {
-      //   var selectVal = this.value;
-      //   if (selectVal == "all") {
-      //     fillTable(event.data);
-      //   } else {
-      //     selectVal = selectVal == "true" ? true : false;
-      //     var newData = [];
-      //     for (var i = 0; i < event.data.length; ++i) {
-      //       if (event.data[i].equipment.board == selectVal) {
-      //         newData.push(event.data[i]);
-      //       }
-      //     }
-      //     fillTable(newData);
-      //   }
-      // });
-      // $("#wifiSelect").on("change", data, function(event) {
-      //   var selectVal = this.value;
-      //   if (selectVal == "all") {
-      //     fillTable(event.data);
-      //   } else {
-      //     selectVal = selectVal == "true" ? true : false;
-      //     var newData = [];
-      //     for (var i = 0; i < event.data.length; ++i) {
-      //       if (event.data[i].equipment.wifi == selectVal) {
-      //         newData.push(event.data[i]);
-      //       }
-      //     }
-      //     fillTable(newData);
-      //   }
-      // });
     }
   });
-
-  // $("#projector").change(function() {
-  //   console.log(this.value);
-  // });
 });
