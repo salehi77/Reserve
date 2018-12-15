@@ -1,9 +1,54 @@
+/* General */
+
 body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 0;
+  font-family: "B Nazanin";
+  background-color: #ccc;
 }
+
+ul#navbar {
+  list-style-type: none;
+  width: 100%;
+  margin: 5px 0 0 0;
+  padding: 0 20% 0 0;
+  background-color: #4aae4a;
+  /* border-radius: 5%; */
+  /* box-shadow: 2px 2px 5px #203e20; */
+  box-shadow: 0px 4px 10px 0px #203e20, -25px 0px 30px -25px inset #203e20,
+    395px 0px 30px -25px inset #203e20;
+}
+ul#navbar li {
+  display: inline-block;
+  /* width: 10%; */
+  height: 65px;
+  opacity: 1;
+  border-left: 1px solid #139c44;
+}
+ul#navbar li a {
+  display: block;
+  box-sizing: border-box;
+  padding: 15px 40px;
+  margin: 0;
+  height: 100%;
+
+  text-align: center;
+  text-decoration: none;
+  font-size: 24px;
+  border-radius: 8px;
+
+  color: #eee;
+  /* border-left: 1px solid #f2f2f2; */
+}
+
+ul#navbar li a:hover {
+  background-color: #249924;
+  color: #fff;
+}
+
+/* Options */
 
 #options {
   width: 75%;
@@ -24,8 +69,9 @@ body {
   width: 65%;
 }
 
+/* Table */
+
 #places {
-  font-family: "B Nazanin";
   border-collapse: collapse;
   width: 75%;
   text-align: right;
@@ -52,6 +98,8 @@ body {
   background-color: #4caf50;
   color: white;
 }
+
+/* Responsibility */
 
 @media screen and (max-width: 600px) {
   #options {
