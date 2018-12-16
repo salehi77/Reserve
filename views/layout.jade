@@ -1,7 +1,23 @@
 doctype html
-html
+html(dir='rtl',lang='fa')
   head
-    title= title
+    meta(charset='utf-8')
+    title=title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    block header
   body
+    ul#navbar
+      li#navLink
+        a(href='/') خانه
+      li#navLink
+        a(href='/place-list') لیست مکان ها
+      li#navLink
+        a(href='/reserveProc/rsv?step=1') رزرو
+      li#navLink
+        a(href='/') پیگیری رزرو
+      li#navLink
+        a(href='/login') مدیریت
+      li#navLogo
+        a(href='/')
+          img(src='/images/iutlogo.png', alt='iut logo', height='65', width='220')
     block content

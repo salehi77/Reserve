@@ -5,11 +5,11 @@ const router = express.Router();
 const Place = require("./../database/models/place");
 
 router.get("/", function(req, res, next) {
-  res.sendFile(path.join(__dirname, "../public/home.html"));
+  res.render("home", { title: "خانه" });
 });
 
 router.get("/place-list", (req, res) => {
-  res.render("place-list");
+  res.render("place-list", { title: "لیست مکان ها" });
 });
 
 router.get("/getPlaces", (req, res) => {

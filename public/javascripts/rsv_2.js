@@ -5,4 +5,10 @@ $(function() {
     "action",
     formAction + "&requestID=" + urlParams.get("requestID")
   );
+
+  var backStep = $("a#backStep").attr("href");
+  $("a#backStep").attr(
+    "href",
+    backStep + "&requestID=" + urlParams.get("requestID")
+  );
 });

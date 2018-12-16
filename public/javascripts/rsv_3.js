@@ -6,9 +6,12 @@ $(function() {
     formAction + "&requestID=" + urlParams.get("requestID")
   );
 
-  $("#backStep").attr(
+  console.log(urlParams.get("requestID"));
+
+  var backStep = $("a#backStep").attr("href");
+  $("a#backStep").attr(
     "href",
-    "rsv?step=2&requestID=" + urlParams.get("requestID")
+    backStep + "&requestID=" + urlParams.get("requestID")
   );
 
   var tommorrow = new persianDate().add("days", 1);

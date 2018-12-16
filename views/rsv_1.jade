@@ -1,22 +1,20 @@
-doctype html
-html
-  head
-    title= title
-    //- link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src="/javascripts/jquery-3.3.1.min.js")
-    script(src="/javascripts/rsv_1.js")
-  body
-    block content
-      p.stepHeader مرحله اول- متقاضی دانشگاهی/خارج از دانشگاه
-      form.reserveForm#reserveFormStep1(method='POST',action='/reserveProc/rsv?step=2')
-        input(type="radio", name="academic", value="academic" checked='checked')
-        | متقاضی داخل دانشگاه
-        br
-        input(type="radio", name="academic", value="non-academic")
-        | متقاضی خارج از دانشگاه
-        br
-        input(type='submit', value='مرحله بعد')
+extends layout
 
-      br
+block header
+  script(src="/javascripts/jquery-3.3.1.min.js")
+  script(src="/javascripts/rsv_1.js")
 
-      p(id="err_msg")
+block content
+  p.stepHeader مرحله اول- متقاضی دانشگاهی/خارج از دانشگاه
+  form.reserveForm#reserveFormStep1(method='POST',action='/reserveProc/rsv?step=2')
+    input(type="radio", name="academic", value="academic" checked='checked')
+    | متقاضی داخل دانشگاه
+    br
+    input(type="radio", name="academic", value="non-academic")
+    | متقاضی خارج از دانشگاه
+    br
+    input(type='submit', value='مرحله بعد')
+
+  br
+
+  p(id="err_msg")

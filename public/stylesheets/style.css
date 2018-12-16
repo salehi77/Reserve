@@ -1,33 +1,35 @@
 /* General */
 
+@import url("https://fonts.googleapis.com/css?family=Lalezar");
+
 body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 0;
-  font-family: "B Nazanin";
+  font-family: "Lalezar", "B Zar";
   background-color: #ccc;
+  width: 100%;
 }
 
 ul#navbar {
   list-style-type: none;
-  width: 100%;
+  /* width: 100%; */
   margin: 5px 0 0 0;
   padding: 0 20% 0 0;
   background-color: #4aae4a;
-  /* border-radius: 5%; */
-  /* box-shadow: 2px 2px 5px #203e20; */
   box-shadow: 0px 4px 10px 0px #203e20, -25px 0px 30px -25px inset #203e20,
-    395px 0px 30px -25px inset #203e20;
+    25px 0px 30px -25px inset #203e20;
+
+  position: relative;
 }
-ul#navbar li {
+ul#navbar li#navLink {
   display: inline-block;
-  /* width: 10%; */
   height: 65px;
   opacity: 1;
   border-left: 1px solid #139c44;
 }
-ul#navbar li a {
+ul#navbar li#navLink a {
   display: block;
   box-sizing: border-box;
   padding: 15px 40px;
@@ -40,82 +42,15 @@ ul#navbar li a {
   border-radius: 8px;
 
   color: #eee;
-  /* border-left: 1px solid #f2f2f2; */
 }
 
-ul#navbar li a:hover {
+ul#navbar li#navLink a:hover {
   background-color: #249924;
   color: #fff;
 }
 
-/* Options */
-
-#options {
-  width: 75%;
-}
-
-#options > div {
+li#navLogo {
   display: inline-block;
-  margin: 5px 10px;
-  width: 15%;
-}
-
-#options span {
-  display: inline-block;
-  width: 35%;
-}
-
-#options select {
-  width: 65%;
-}
-
-/* Table */
-
-#places {
-  border-collapse: collapse;
-  width: 75%;
-  text-align: right;
-}
-
-#places td,
-#places th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-#places tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-#places tr:hover {
-  background-color: #ddd;
-}
-
-#places th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  /* text-align: right; */
-  background-color: #4caf50;
-  color: white;
-}
-
-/* Responsibility */
-
-@media screen and (max-width: 600px) {
-  #options {
-    width: 50%;
-  }
-  #options > div {
-    width: 100%;
-  }
-  #places {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 1500px) {
-  #options select,
-  #options span {
-    width: 100%;
-  }
+  position: absolute;
+  left: 15%;
 }

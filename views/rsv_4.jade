@@ -1,24 +1,19 @@
-doctype html
-html
-  head
-    title= title
-    //- link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/persian-datepicker.min.css')
-    script(src="/javascripts/jquery.min.js")
-    script(src="/javascripts/persian-date.min.js")
-    script(src="/javascripts/persian-datepicker.min.js")
-    script(src="/javascripts/rsv_4.js")
-  body
-    block content
-      p مرحله چهارم- دریافت کد رهگیری
+extends layout
 
-      p
-        span کد پیگیری شما
-        span=followCode
-      
+block header
+  script(src="/javascripts/jquery.min.js")
+  script(src="/javascripts/rsv_4.js")
 
-      a(href="/") اتمام
+block content
+  p مرحله چهارم- دریافت کد رهگیری
 
-      br
+  p
+    span کد پیگیری شما
+    span=followCode
+  
 
-      a#backStep(href="rsv?step=2") مرحله قبل
+  a(href="/") اتمام
+
+  br
+
+  a#backStep(href="/reserveProc/rsv?step=3") مرحله قبل

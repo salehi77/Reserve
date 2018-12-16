@@ -1,70 +1,68 @@
-doctype html
-html
-  head
-    title= title
-    //- link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/persian-datepicker.min.css')
-    script(src="/javascripts/jquery.min.js")
-    script(src="/javascripts/persian-date.min.js")
-    script(src="/javascripts/persian-datepicker.min.js")
-    script(src="/javascripts/rsv_3.js")
-  body
-    block content
-      p مرحله سوم- ثبت مکان
-      input#datepicker(type='text')
-      input#datepickerValue(type='hidden')
-      form.reserveForm#reserveFormStep3(method='POST', action='/reserveProc/rsv?step=4')
-        table
-          tr
-            th نام
-            th نوع
-            th ظرفیت
-            th پروژکتور
-            th کامپیوتر
-            th تخته
-            th وای فای
-          for doc in docs
-            tr
-              td=doc.name
-              td=doc.type
-              td=doc.capacity
-              td
-                if doc.equipment.projector
-                  = 'دارد'
-                else
-                  = 'ندارد'
-              td
-                if doc.equipment.computer
-                  = 'دارد'
-                else
-                  = 'ندارد'
-              td
-                if doc.equipment.board
-                  = 'دارد'
-                else
-                  = 'ندارد'
-              td
-                if doc.equipment.wifi
-                  = 'دارد'
-                else
-                  = 'ندارد'
-              td
-                input(type='radio', name='placeID', value=doc.ID,required='required')
-              td
-                input.hourFrom(id='hf'+doc.ID, type='number', value='8', min='8', max='20')
-                span :
-                input.minFrom(id='mf'+doc.ID,type='number', value='0', min='0', max='45', step="15")
-                تا
-                input.hourTo(id='ht'+doc.ID, type='number', value='9', min='8', max='20')
-                span :
-                input.minTo(id='mt'+doc.ID,type='number', value='0', min='0', max='45', step="15")
-              td
-                span.wrongTime(id='wt'+doc.ID)
+extends layout
 
-        
-        br
+block header
+  link(rel='stylesheet', href='/stylesheets/persian-datepicker.min.css')
+  script(src="/javascripts/jquery.min.js")
+  script(src="/javascripts/persian-date.min.js")
+  script(src="/javascripts/persian-datepicker.min.js")
+  script(src="/javascripts/rsv_3.js")
 
-        input(type='submit', value='مرحله بعد')
-        
+block content
+  p مرحله سوم- ثبت مکان
+  input#datepicker(type='text')
+  input#datepickerValue(type='hidden')
+  form.reserveForm#reserveFormStep3(method='POST', action='/reserveProc/rsv?step=4')
+    table
+      tr
+        th نام
+        th نوع
+        th ظرفیت
+        th پروژکتور
+        th کامپیوتر
+        th تخته
+        th وای فای
+      for doc in docs
+        tr
+          td=doc.name
+          td=doc.type
+          td=doc.capacity
+          td
+            if doc.equipment.projector
+              = 'دارد'
+            else
+              = 'ندارد'
+          td
+            if doc.equipment.computer
+              = 'دارد'
+            else
+              = 'ندارد'
+          td
+            if doc.equipment.board
+              = 'دارد'
+            else
+              = 'ندارد'
+          td
+            if doc.equipment.wifi
+              = 'دارد'
+            else
+              = 'ندارد'
+          td
+            input(type='radio', name='placeID', value=doc.ID,required='required')
+          td
+            input.hourFrom(id='hf'+doc.ID, type='number', value='8', min='8', max='20')
+            span :
+            input.minFrom(id='mf'+doc.ID,type='number', value='0', min='0', max='45', step="15")
+            span تا
+            input.hourTo(id='ht'+doc.ID, type='number', value='9', min='8', max='20')
+            span :
+            input.minTo(id='mt'+doc.ID,type='number', value='0', min='0', max='45', step="15")
+          td
+            span.wrongTime(id='wt'+doc.ID)
 
-      a#backStep(href="rsv?step=2") مرحله قبل
+    
+    br
+
+    input(type='submit', value='مرحله بعد')
+    
+
+  a#backStep(href="/reserveProc/rsv?step=2") مرحله قبل

@@ -1,8 +1,10 @@
 $(function() {
   var urlParams = new URLSearchParams(window.location.search);
 
-  $("#backStep").attr(
+  var backStep = $("a#backStep").attr("href");
+  console.log(backStep);
+  $("a#backStep").attr(
     "href",
-    "rsv?step=3&requestID=" + urlParams.get("requestID")
+    backStep + "&requestID=" + urlParams.get("requestID")
   );
 });

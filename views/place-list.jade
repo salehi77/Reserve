@@ -1,57 +1,46 @@
-doctype html
-html(dir='rtl',lang='fa')
-  head
-    meta(name="viewport",content="width=device-width, initial-scale=1.0") 
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    script(src="/javascripts/jquery.min.js")
-    script(src="/javascripts/place-list.js")
-  body
-    block content
-      ul#navbar
-        li
-          a(href='/') خانه
-        li
-          a(href='/place-list') لیست مکان ها
-        li
-          a(href='/reserveProc/rsv?step=1') رزرو
-        li
-          a(href='/login') مدیریت
-      div#options
-        div
-          span پروژکتور: 
-          select.changeAble(name='projector')
-            option(value="all") همه
-            option(value="1") دارد
-            option(value="0") ندارد
-        div
-          span کامپیوتر: 
-          select.changeAble(name='computer')
-            option(value="all") همه
-            option(value="1") دارد
-            option(value="0") ندارد
-        div
-          span تخته: 
-          select.changeAble(name='board')
-            option(value="all") همه
-            option(value="1") دارد
-            option(value="0") ندارد
-        div
-          span وایفای: 
-          select.changeAble(name='wifi')
-            option(value="all") همه
-            option(value="1") دارد
-            option(value="0") ندارد
-        div
-          span ظرفیت: 
-          select.changeAble(name='capacity')
-            option(value="all") همه
-            option(value="1") کمتر از 50
-            option(value="2") بین 50 تا 80
-            option(value="3") بین 80 تا 100
-            option(value="4") بیشتر از 100
+extends layout
+
+block header
+  link(rel='stylesheet', href='/stylesheets/place-list.css')
+  script(src="/javascripts/jquery.min.js")
+  script(src="/javascripts/place-list.js")
+
+block content
+  div#options
+    div
+      span پروژکتور: 
+      select.changeAble(name='projector')
+        option(value="all") همه
+        option(value="1") دارد
+        option(value="0") ندارد
+    div
+      span کامپیوتر: 
+      select.changeAble(name='computer')
+        option(value="all") همه
+        option(value="1") دارد
+        option(value="0") ندارد
+    div
+      span تخته: 
+      select.changeAble(name='board')
+        option(value="all") همه
+        option(value="1") دارد
+        option(value="0") ندارد
+    div
+      span وایفای: 
+      select.changeAble(name='wifi')
+        option(value="all") همه
+        option(value="1") دارد
+        option(value="0") ندارد
+    div
+      span ظرفیت: 
+      select.changeAble(name='capacity')
+        option(value="all") همه
+        option(value="1") کمتر از 50
+        option(value="2") بین 50 تا 80
+        option(value="3") بین 80 تا 100
+        option(value="4") بیشتر از 100
 
 
 
-      table#places
+  table#places
 

@@ -28,15 +28,18 @@ router.get("/submit-request", (req, res) => {
 router.get("/rsv", (req, res) => {
   switch (req.query.step) {
     case "1":
-      res.render("rsv_1");
+      res.render("rsv_1", { title: "رزرو- مرحله اول" });
       break;
     case "2":
-      res.render("rsv_2_aca", { requestID: req.query.requestID });
+      res.render("rsv_2_aca", {
+        requestID: req.query.requestID,
+        title: "رزرو- مرحله دوم"
+      });
       break;
     case "3":
       Place.find({})
         .then(docs => {
-          res.render("rsv_3", { docs });
+          res.render("rsv_3", { docs, title: "رزرو- مرحله سوم" });
         })
         .catch(err => {
           console.error(err);
@@ -148,7 +151,7 @@ router.post("/rsv", (req, res) => {
             .save()
             .then(doc => {
               // res.redirect("/rsv?step=4&requestID=" + req.query.requestID);
-              res.render("rsv_4", { followCode });
+              res.render("rsv_4", { followCode, title: "رزرو- مرحله چهارم" });
             })
             .catch(err => {
               console.error(err);
