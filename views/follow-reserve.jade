@@ -1,0 +1,24 @@
+extends layout
+
+block header
+  link(rel='stylesheet', href='/stylesheets/place-list.css')
+  script(src="/javascripts/jquery.min.js")
+  script(src="/javascripts/persian-date.min.js")
+  script(src="/javascripts/follow-reserve.js")
+
+block content
+  label(for="followCode") شماره پیگیری خود را وارد کنید: 
+  input#followCode(type="number")
+
+  span#message
+
+  br
+
+  button#checkCode بررسی
+
+  table#places
+    //- tr
+    //-   th تاریخ درخواست
+    //-   th محل رزرو شده
+    //-   th تاریخ رزرو شده
+    //-   th روز رزرو شده

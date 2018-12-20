@@ -6,6 +6,9 @@ const router = express.Router();
 
 const Place = require("./../database/models/place");
 const Admin = require("../database/models/admin");
+const User = require("../database/models/user");
+
+const superSecret = "123abc";
 
 router.get("/login", (req, res) => {
   res.render("login", { title: "ورود" });
@@ -16,7 +19,7 @@ let authenticate = (req, res, next) => {
 
   let decoded;
   try {
-    decoded = jwt.verify(token, "123abc");
+    decoded = jwt.verify(token, superSecret);
     req.decoded = decoded;
     // req.token = token;
     next();
@@ -30,7 +33,6 @@ router.get("/managePage", authenticate, (req, res) => {
 });
 
 router.post("/managePage", (req, res) => {
-  // console.log(req.body);
   Admin.findOne({ username: req.body.username })
     .then(admin => {
       if (!admin) {
@@ -41,7 +43,7 @@ router.post("/managePage", (req, res) => {
         if (resPassword) {
           var token = jwt.sign(
             { _id: admin._id.toHexString(), username: admin.username },
-            "123abc"
+            superSecret
           );
 
           res.redirect(
@@ -59,14 +61,10 @@ router.post("/managePage", (req, res) => {
 });
 
 router.post("/addPlace", authenticate, (req, res) => {
-  console.log(req.body);
-  // console.log(req.headers);
-
   async function f() {
     let doc = true;
     while (doc) {
       var randomID = Math.floor(Math.random() * 100000) + 10000;
-      console.log(randomID);
       doc = await Place.findOne({ ID: randomID });
     }
     let newPlace = new Place({
@@ -97,6 +95,11 @@ router.post("/addPlace", authenticate, (req, res) => {
   }
 
   f();
+});
+
+router.post("/addUser", authenticate, (req, res) => {
+  // console.log(req.body);
+  res.send("success");
 });
 
 router.post("/addadmin", (req, res) => {

@@ -6,8 +6,6 @@ $(function() {
     formAction + "&requestID=" + urlParams.get("requestID")
   );
 
-  console.log(urlParams.get("requestID"));
-
   var backStep = $("a#backStep").attr("href");
   $("a#backStep").attr(
     "href",

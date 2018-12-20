@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
 
-const User = mongoose.model("User", {
+var UserSchema = new mongoose.Schema({
   username: {
     type: String
   },
@@ -9,5 +8,7 @@ const User = mongoose.model("User", {
     type: String
   }
 });
+
+const User = mongoose.model("User", UserSchema);
 
 module.exports = User;
