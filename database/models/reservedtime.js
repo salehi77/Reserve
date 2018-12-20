@@ -3,7 +3,7 @@ mongoose.Promise = global.Promise;
 
 const ReservedTime = mongoose.model("ReservedTime", {
   placeID: {
-    type: String
+    type: Number
   },
   requestID: {
     type: Number

@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 
+const Place = require("./../database/models/place");
 const Admin = require("../database/models/admin");
 
 router.get("/login", (req, res) => {
@@ -11,7 +12,7 @@ router.get("/login", (req, res) => {
 });
 
 let authenticate = (req, res, next) => {
-  let token = req.query.auth || req.header("x-auth");
+  let token = req.header("x-auth") || req.query.auth;
 
   let decoded;
   try {
@@ -29,7 +30,7 @@ router.get("/managePage", authenticate, (req, res) => {
 });
 
 router.post("/managePage", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   Admin.findOne({ username: req.body.username })
     .then(admin => {
       if (!admin) {
@@ -55,6 +56,47 @@ router.post("/managePage", (req, res) => {
       console.error(err);
       res.render("login", { title: "ورود" });
     });
+});
+
+router.post("/addPlace", authenticate, (req, res) => {
+  console.log(req.body);
+  // console.log(req.headers);
+
+  async function f() {
+    let doc = true;
+    while (doc) {
+      var randomID = Math.floor(Math.random() * 100000) + 10000;
+      console.log(randomID);
+      doc = await Place.findOne({ ID: randomID });
+    }
+    let newPlace = new Place({
+      ID: randomID,
+      name: req.body.name,
+      type:
+        req.body.type === "class"
+          ? "کلاس"
+          : req.body.type === "seminar"
+          ? "سمینار"
+          : "تالار",
+      capacity: req.body.capacity,
+      equipment: {
+        projector: req.body.projector ? true : false,
+        computer: req.body.computer ? true : false,
+        board: req.body.board ? true : false,
+        wifi: req.body.wifi ? true : false
+      }
+    });
+    newPlace
+      .save()
+      .then(doc => {
+        res.send({ error: null, message: "success" });
+      })
+      .catch(err => {
+        res.send({ error: err });
+      });
+  }
+
+  f();
 });
 
 router.post("/addadmin", (req, res) => {

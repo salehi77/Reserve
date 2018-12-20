@@ -9,7 +9,7 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/place-list", (req, res) => {
-  res.render("place-list", { title: "لیست مکان ها" });
+  res.render("place-list", { title: "لیست فضاها" });
 });
 
 router.get("/getPlaces", (req, res) => {

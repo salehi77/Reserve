@@ -3,7 +3,7 @@ mongoose.Promise = global.Promise;
 
 const Place = mongoose.model("Place", {
   ID: {
-    type: String
+    type: Number
   },
   name: {
     type: String

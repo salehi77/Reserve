@@ -25,7 +25,7 @@ const Request = mongoose.model("Request", {
     type: Object
   },
   placeID: {
-    type: String
+    type: Number
   },
   date: {
     type: Object

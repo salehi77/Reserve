@@ -114,7 +114,7 @@ router.post("/rsv", (req, res) => {
         { ID: req.query.requestID },
         {
           $set: {
-            placeID: req.body.placeID,
+            placeID: parseInt(req.body.placeID),
             followCode,
             date: {
               year: req.body.year,
@@ -132,7 +132,7 @@ router.post("/rsv", (req, res) => {
       )
         .then(doc => {
           let newReservedTime = new ReservedTime({
-            placeID: req.body.placeID,
+            placeID: parseInt(req.body.placeID),
             requestID: req.query.requestID,
             date: {
               year: req.body.year,
@@ -173,7 +173,10 @@ router.post("/checkReservedTimes", (req, res) => {
     month: req.body["dateToReserve[month]"],
     date: req.body["dateToReserve[date]"]
   };
-  ReservedTime.find({ placeID: req.body.placeID, date: dateToReserve })
+  ReservedTime.find({
+    placeID: parseInt(req.body.placeID),
+    date: dateToReserve
+  })
     .select("time -_id")
     .then(docs => {
       var fromTime1 =

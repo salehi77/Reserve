@@ -1,9 +1,52 @@
 extends layout
 
+block header
+  script(src="/javascripts/jquery.min.js")
+  script(src="/javascripts/manage-page.js")
+
 block content
 
-  button اضافه کردن کلاس
-  button اضافه کردن کاربر
+  button#addplace اضافه کردن فضا
+  button#adduser اضافه کردن کاربر
+  span#message
+
+  div#content
+    div#addingPlace(style='display:none;')
+      label(for="name") نام
+      input#name(type="text")
+
+      br
+
+      label(for="selectType")
+      select#selectType(name="selectType")
+        option(value="class") کلاس
+        option(value="seminar") سمینار
+        option(value="talar") تالار
+
+      br
+
+      label(for="projectorID") پروژکتور
+      input#projectorID(type="checkbox", name="projector", value="projector")
+
+      label(for="computerID") کامپیوتر
+      input#computerID(type="checkbox", name="computer", value="computer")
+
+      label(for="boardID") تخته
+      input#boardID(type="checkbox", name="board", value="board")
+
+      label(for="wifiID") وایفای
+      input#wifiID(type="checkbox", name="wifi", value="wifi")
+
+
+      br
+
+      label(for="capacity") ظرفیت
+      input#capacity(type="number", min="0")
+
+      br
+
+      button#createPlace ابجاد
+
 
   br
 
