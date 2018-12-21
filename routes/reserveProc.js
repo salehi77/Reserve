@@ -2,10 +2,9 @@ const path = require("path");
 const express = require("express");
 const router = express.Router();
 
-// var { Place, Request, ReservedTime } = require("./../database/models");
 const Place = require("./../database/models/place");
 const Request = require("./../database/models/request");
-const ReservedTime = require("./../database/models/reservedtime");
+const User = require("./../database/models/user");
 
 router.get("/submit-request", (req, res) => {
   Request.find({})
@@ -45,7 +44,18 @@ router.get("/rsv", (req, res) => {
           console.error(err);
           res.status(400).send(err);
         });
+      break;
+    case "4":
+      let followCode =
+        req.query.followCode === undefined
+          ? "خطایی رخ داده است!"
+          : req.query.followCode;
 
+      res.render("rsv_4", {
+        requestID: req.query.requestID,
+        followCode,
+        title: "رزرو- مرحله چهارم"
+      });
       break;
   }
 });
@@ -78,24 +88,17 @@ router.post("/rsv", (req, res) => {
         {
           $set: {
             personDetail: {
-              firstname: req.body.firstname,
-              lastname: req.body.lastname,
-              employeeNumber: req.body.employeeNumber,
-              telNumber: req.body.telNumber,
-              mobNumber: req.body.mobNumber
+              username: req.body.username,
+              telNumber: req.body["tel-number"],
+              mobNumber: req.body["mob-number"]
             },
             planDetail: {
               subject: req.body.subject,
               level: req.body.level,
-              sponserName: req.body.sponserName,
-              sponserTel: req.body.sponserTel
+              sponserName: req.body["sponser-name"],
+              sponserTel: req.body["sponser-tel"]
             },
-            summary: req.body.summary,
-            guestDetail: {
-              totGuest: req.body.totGuest,
-              acGuest: req.body.acGuest,
-              nacGuest: req.body.nacGuest
-            }
+            summary: req.body.summary
           }
         },
         (err, doc) => {
@@ -109,59 +112,51 @@ router.post("/rsv", (req, res) => {
       );
       break;
     case "4":
-      var followCode = Math.floor(Math.random() * 100000) + 10000;
-      Request.findOneAndUpdate(
-        { ID: req.query.requestID },
-        {
-          $set: {
-            placeID: parseInt(req.body.placeID),
-            followCode,
-            date: {
-              year: req.body.year,
-              month: req.body.month,
-              date: req.body.date
-            },
-            time: {
-              hourFrom: req.body.hourFrom,
-              minFrom: req.body.minFrom,
-              hourTo: req.body.hourTo,
-              minTo: req.body.minTo
+      async function f() {
+        let request = await Request.findOne({ ID: req.query.requestID });
+
+        if (request.personDetail === undefined) {
+          res.redirect(
+            "/reserveProc/rsv?step=4&requestID=" + req.query.requestID
+          );
+          return;
+        }
+
+        var followCode = Math.floor(Math.random() * 100000) + 10000;
+        Request.findOneAndUpdate(
+          { ID: req.query.requestID },
+          {
+            $set: {
+              placeID: parseInt(req.body.placeID),
+              followCode,
+              date: {
+                year: req.body.year,
+                month: req.body.month,
+                date: req.body.date
+              },
+              time: {
+                hourFrom: req.body.hourFrom,
+                minFrom: req.body.minFrom,
+                hourTo: req.body.hourTo,
+                minTo: req.body.minTo
+              }
             }
           }
-        }
-      )
-        .then(doc => {
-          let newReservedTime = new ReservedTime({
-            placeID: parseInt(req.body.placeID),
-            requestID: req.query.requestID,
-            date: {
-              year: req.body.year,
-              month: req.body.month,
-              date: req.body.date
-            },
-            time: {
-              hourFrom: req.body.hourFrom,
-              minFrom: req.body.minFrom,
-              hourTo: req.body.hourTo,
-              minTo: req.body.minTo
-            }
+        )
+          .then(doc => {
+            res.redirect(
+              "/reserveProc/rsv?step=4&requestID=" +
+                req.query.requestID +
+                "&followCode=" +
+                followCode
+            );
+          })
+          .catch(err => {
+            console.error(err);
+            res.send(400).send(err);
           });
-
-          newReservedTime
-            .save()
-            .then(doc => {
-              // res.redirect("/rsv?step=4&requestID=" + req.query.requestID);
-              res.render("rsv_4", { followCode, title: "رزرو- مرحله چهارم" });
-            })
-            .catch(err => {
-              console.error(err);
-              res.send(400).send(err);
-            });
-        })
-        .catch(err => {
-          console.error(err);
-          res.send(400).send(err);
-        });
+      }
+      f();
       break;
   }
 });
@@ -173,7 +168,7 @@ router.post("/checkReservedTimes", (req, res) => {
     month: req.body["dateToReserve[month]"],
     date: req.body["dateToReserve[date]"]
   };
-  ReservedTime.find({
+  Request.find({
     placeID: parseInt(req.body.placeID),
     date: dateToReserve
   })
@@ -186,10 +181,10 @@ router.post("/checkReservedTimes", (req, res) => {
         parseInt(req.body["timeToReserve[hourTo]"]) * 3600 +
         parseInt(req.body["timeToReserve[minTo]"]) * 60;
       if (fromTime1 >= toTime1) {
-        res.send({ reserved: false, wrongTime: true });
+        res.send({ error: null, reserved: false, wrongTime: true });
         return;
       }
-      var sendToUser = true;
+
       for (var i = 0; i < docs.length; ++i) {
         var fromTime2 =
           parseInt(docs[i].time.hourFrom) * 3600 +
@@ -202,15 +197,31 @@ router.post("/checkReservedTimes", (req, res) => {
           (fromTime1 >= fromTime2 && fromTime1 < toTime2) ||
           (toTime1 <= toTime2 && toTime1 > fromTime2)
         ) {
-          res.send({ reserved: true, wrongTime: false });
+          res.send({ error: null, reserved: true, wrongTime: false });
           return;
         }
       }
-      res.send({ reserved: false, wrongTime: false });
+      res.send({ error: null, reserved: false, wrongTime: false });
     })
     .catch(err => {
       console.error(err);
-      res.status(400).send(err);
+      res.status(400).send({ error: err });
+    });
+});
+
+router.post("/checkUser", (req, res) => {
+  // console.log(req.body);
+  User.findOne({ username: req.body.username, password: req.body.password })
+    .then(doc => {
+      if (doc) {
+        res.send({ error: null, message: "auth" });
+      } else {
+        res.send({ error: null, message: "not-auth" });
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status.send({ error: err });
     });
 });
 

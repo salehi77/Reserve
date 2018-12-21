@@ -21,9 +21,6 @@ const Request = mongoose.model("Request", {
   summary: {
     type: String
   },
-  guestDetail: {
-    type: Object
-  },
   placeID: {
     type: Number
   },

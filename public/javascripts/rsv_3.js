@@ -83,7 +83,9 @@ $(function() {
             $(".wrongTime").text("");
             var placeID = $("input[name=placeID]:checked").val();
 
-            $("#wt" + placeID).text(data.reserved ? "reserved" : "wrong time");
+            $("#wt" + placeID).text(
+              data.reserved ? "رزرو شده است" : "زمان اشتباه"
+            );
           }
         }
       );

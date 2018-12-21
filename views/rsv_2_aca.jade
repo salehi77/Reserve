@@ -2,52 +2,48 @@ extends layout
 
 block header
   script(src="/javascripts/jquery.min.js")
-  script(src="/javascripts/rsv_2.js")
+  script(src="/javascripts/rsv_2_aca.js")
 
 block content
   p مرحله دوم- ثبت اطلاعات
   form.reserveForm#reserveFormStep2(method='POST', action='/reserveProc/rsv?step=3')
     fieldset#personal-info
       legend مشخصات متقاضی
-      label(for='firstname') نام:
+      br
+
+      label(for='username') شماره دانشجویی/کارمندی/استادی:
         span(style='font-size:26px;color:red;font-weight:bold') *
-      input(type='text', name='firstname')
+      input#username(type='text', name='username', required='required', value='1234567')
       
       br
 
-      label(for='lastname') نام خانوادگی:
+      label(for='password') رمز عبور کاربری:
         span(style='font-size:26px;color:red;font-weight:bold') *
-      input(type='text', name='lastname')
-
-      br
-
-      label(for='employee-number') شماره دانشجویی/کارمندی/استادی:
-        span(style='font-size:26px;color:red;font-weight:bold') *
-      input(type='text', name='employee-number')
+      input#password(type='password', name='password', required='required',value='pass1')
       
       br
 
       label(for='tel-number') شماره تلفن:
         span(style='font-size:26px;color:red;font-weight:bold') *
-      input(type='text', name='tel-number')
+      input#tel-number(type='text', name='tel-number', required='required', value='0311234567')
 
       br
 
       label(for='mob-number') شماره همراه:
         span(style='font-size:26px;color:red;font-weight:bold') *
-      input(type='text', name='mob-number')
+      input#mob-number(type='text', name='mob-number', required='required', value='09131234567')
 
     fieldset#plan-info
       legend مشخصات برنامه
       label(for='subject') موضوع:
         span(style='font-size:26px;color:red;font-weight:bold') *
-      input(type='text', name='subject')
+      input#subject(type='text', name='subject', required='required', value='موضوع')
       
       br
 
-      label(for='level') سطح برنامه:
+      span سطح برنامه:
       br
-      input(type="radio", name="level", value="int")
+      input(type="radio", name="level", value="int", required='required')
       | بین المللی
       input(type="radio", name="level", value="nat")
       | ملی
@@ -55,49 +51,31 @@ block content
       | منطقه ای
       input(type="radio", name="level", value="prov")
       | استانی
-      input(type="radio", name="level", value="oth")
+      input(type="radio", name="level", value="oth", checked='checked')
       | سایر
 
       br
 
 
       label(for='sponser-name') نام اسپانسر:
-      input(type='text', name='sponser-name')
+      input#sponser-name(type='text', name='sponser-name', value='ندارد')
 
       br
 
       label(for='sponser-tel') تلفن اسپانسر:
-      input(type='text', name='sponser-tel')
+      input#sponser-tel(type='text', name='sponser-tel', value='')
 
     fieldset#summary-info
       legend چکیده محتوای همایش
-      label(for='summarغ') حداکثر 350 کاراکتر:
+      label(for='summary') حداکثر 350 کاراکتر:
         span(style='font-size:26px;color:red;font-weight:bold') *
-      textarea(name="summury", cols="50", rows="4")
+      textarea#summary(name="summary", cols="50", rows="4", required='required')  چکیده محتوای نمایش
       
-      br
-
-    fieldset#guest-info
-      legend اطلاعات مهمانان
-      label(for='tot-guest') تعداد مهمانان:
-        span(style='font-size:26px;color:red;font-weight:bold') *
-      input(type='text', name='tot-guest')
-
-      br
-
-      label(for='ac-guest') تعداد مهمانان دانشگاهی:
-        span(style='font-size:26px;color:red;font-weight:bold') *
-      input(type='text', name='ac-guest')
-
-      br
-
-      label(for='nac-guest') تعداد مهمانان خارج از دانشگاه:
-        span(style='font-size:26px;color:red;font-weight:bold') *
-      input(type='text', name='nac-guest')
-
     br
 
     input(type='submit', value='مرحله بعد')
+
+    span#message
     
 
   a#backStep(href="rsv?step=1") مرحله قبل
