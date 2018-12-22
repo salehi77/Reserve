@@ -164,9 +164,12 @@ router.post("/rsv", (req, res) => {
 router.post("/checkReservedTimes", (req, res) => {
   // console.log(req.body);
   var dateToReserve = {
-    year: req.body["dateToReserve[year]"],
-    month: req.body["dateToReserve[month]"],
-    date: req.body["dateToReserve[date]"]
+    // year: req.body["dateToReserve[year]"],
+    // month: req.body["dateToReserve[month]"],
+    // date: req.body["dateToReserve[date]"]
+    year: req.body.dateToReserve.year,
+    month: req.body.dateToReserve.month,
+    date: req.body.dateToReserve.date
   };
   Request.find({
     placeID: parseInt(req.body.placeID),
@@ -175,11 +178,15 @@ router.post("/checkReservedTimes", (req, res) => {
     .select("time -_id")
     .then(docs => {
       var fromTime1 =
-        parseInt(req.body["timeToReserve[hourFrom]"]) * 3600 +
-        parseInt(req.body["timeToReserve[minFrom]"]) * 60;
+        // parseInt(req.body["timeToReserve[hourFrom]"]) * 3600 +
+        parseInt(req.body.timeToReserve.hourFrom) * 3600 +
+        // parseInt(req.body["timeToReserve[minFrom]"]) * 60;
+        parseInt(req.body.timeToReserve.minFrom) * 60;
       var toTime1 =
-        parseInt(req.body["timeToReserve[hourTo]"]) * 3600 +
-        parseInt(req.body["timeToReserve[minTo]"]) * 60;
+        // parseInt(req.body["timeToReserve[hourTo]"]) * 3600 +
+        parseInt(req.body.timeToReserve.hourTo) * 3600 +
+        // parseInt(req.body["timeToReserve[minTo]"]) * 60;
+        parseInt(req.body.timeToReserve.minTo) * 60;
       if (fromTime1 >= toTime1) {
         res.send({ error: null, reserved: false, wrongTime: true });
         return;
@@ -201,7 +208,11 @@ router.post("/checkReservedTimes", (req, res) => {
           return;
         }
       }
-      res.send({ error: null, reserved: false, wrongTime: false });
+      res.send({
+        error: null,
+        reserved: false,
+        wrongTime: false
+      });
     })
     .catch(err => {
       console.error(err);
