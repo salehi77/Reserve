@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
 
 const Place = require("./../database/models/place");
 const Request = require("./../database/models/request");
@@ -222,17 +223,46 @@ router.post("/checkReservedTimes", (req, res) => {
 
 router.post("/checkUser", (req, res) => {
   // console.log(req.body);
-  User.findOne({ username: req.body.username, password: req.body.password })
-    .then(doc => {
-      if (doc) {
-        res.send({ error: null, message: "auth" });
-      } else {
-        res.send({ error: null, message: "not-auth" });
+  // User.findOne({ username: req.body.username, password: req.body.password })
+  //   .then(doc => {
+  //     if (doc) {
+  //       res.send({ error: null, message: "auth" });
+  //     } else {
+  //       res.send({ error: null, message: "not-auth" });
+  //     }
+  //   })
+  //   .catch(err => {
+  //     console.error(err);
+  //     res.status.send({ error: err });
+  //   });
+
+  User.findOne({ username: req.body.username })
+    .then(user => {
+      if (!user) {
+        // res.render("login", { title: "ورود" });
+        res.send({ error: null, auth: false });
+        return;
       }
+      bcrypt.compare(req.body.password, user.password, (err, resPassword) => {
+        if (resPassword) {
+          // var token = jwt.sign(
+          //   { _id: admin._id.toHexString(), username: admin.username },
+          //   superSecret
+          // );
+          res.send({ error: null, auth: true, password: true });
+
+          // res.redirect(
+          //   "/manage/managePage" + "?auth=" + encodeURIComponent(token)
+          // );
+        } else {
+          // res.render("login", { title: "ورود" });
+          res.send({ error: null, auth: true, password: false });
+        }
+      });
     })
     .catch(err => {
       console.error(err);
-      res.status.send({ error: err });
+      res.status(400).send({ error: err });
     });
 });
 

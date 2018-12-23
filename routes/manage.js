@@ -98,8 +98,24 @@ router.post("/addPlace", authenticate, (req, res) => {
 });
 
 router.post("/addUser", authenticate, (req, res) => {
-  // console.log(req.body);
-  res.send("success");
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(req.body.password, salt, (err, hash) => {
+      let newUser = new User({
+        username: req.body.username,
+        password: hash
+      });
+
+      newUser
+        .save()
+        .then(() => {
+          res.send({ errpr: null, success: true });
+        })
+        .catch(err => {
+          console.error(err);
+          res.status(400).send({ error: err });
+        });
+    });
+  });
 });
 
 router.post("/addadmin", (req, res) => {
@@ -113,11 +129,11 @@ router.post("/addadmin", (req, res) => {
       admin
         .save()
         .then(() => {
-          res.send("success");
+          res.send({ error: null, success: true });
         })
         .catch(err => {
           console.error(err);
-          res.status(400).send(err);
+          res.status(400).send({ error: err });
         });
     });
   });

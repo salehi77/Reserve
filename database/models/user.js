@@ -13,10 +13,16 @@ const mongoose = require("mongoose");
 
 const User = mongoose.model("User", {
   username: {
-    type: String
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 1,
+    unique: true
   },
   password: {
-    type: String
+    type: String,
+    require: true,
+    minlength: 3
   }
 });
 

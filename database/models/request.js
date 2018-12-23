@@ -3,7 +3,9 @@ mongoose.Promise = global.Promise;
 
 const Request = mongoose.model("Request", {
   ID: {
-    type: Number
+    type: Number,
+    require: true,
+    unique: true
   },
   requestDate: {
     type: Date,

@@ -21,15 +21,22 @@ $(function() {
         password: $("#password").val()
       },
       function(data) {
-        if (!data.error && data.message === "auth") {
+        console.log(data);
+        if (!data.error && data.auth && data.password) {
           isSend = true;
           $("#reserveFormStep2").submit();
-        } else {
+        } else if (!data.auth) {
           $("span#message")
             .css("color", "red")
             .css("font-size", 24)
             .css("font-weight", "bold")
-            .text("خطا در ورود!");
+            .text("کاربر وجود ندارد!");
+        } else if (!data.password) {
+          $("span#message")
+            .css("color", "red")
+            .css("font-size", 24)
+            .css("font-weight", "bold")
+            .text("رمز عبور اشتباه است!");
         }
       }
     );

@@ -1,9 +1,11 @@
 $(function() {
   $("button#addplace").click(function() {
     $("div#addingPlace").css("display", "block");
+    $("div#addingUser").css("display", "none");
   });
   $("button#adduser").click(function() {
-    $("div#addingUser").css("display", "none");
+    $("div#addingUser").css("display", "block");
+    $("div#addingPlace").css("display", "none");
   });
 
   // Send ajax request for create place
@@ -61,7 +63,7 @@ $(function() {
       $("#addingUser #username").css("border", "1px solid red");
       return;
     }
-    $("#addingUser #name").css("border", "");
+    $("#addingUser #username").css("border", "");
     if ($("#addingUser #password").val() == "") {
       $("#addingUser #password").css("border", "1px solid red");
       return;
@@ -90,21 +92,21 @@ $(function() {
         academic: $("#addingUser #academic:checked").val()
       },
       success: function(msg) {
-        console.log(msg);
-        // if (!msg.error) {
-        //   $("div#addingUser").css("display", "none");
-        //   $("span#message")
-        //     .css("color", "green")
-        //     .css("font-size", 24)
-        //     .css("font-weight", "bold")
-        //     .text("فضا ایجاد شد!");
-        // } else {
-        //   $("span#message")
-        //     .css("color", "red")
-        //     .css("font-size", 24)
-        //     .css("font-weight", "bold")
-        //     .text("دوباره تلاش کنید!");
-        // }
+        // console.log(msg);
+        if (!msg.error) {
+          $("div#addingUser").css("display", "none");
+          $("span#message")
+            .css("color", "green")
+            .css("font-size", 24)
+            .css("font-weight", "bold")
+            .text("کاربر ایجاد شد!");
+        } else {
+          $("span#message")
+            .css("color", "red")
+            .css("font-size", 24)
+            .css("font-weight", "bold")
+            .text("دوباره تلاش کنید!");
+        }
       }
     });
   });
