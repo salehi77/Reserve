@@ -94,13 +94,19 @@ $(function() {
         academic: $("#addingUser #academic:checked").val()
       },
       success: function(msg) {
-        if (!msg.error) {
+        if (!msg.error && !msg.dup && msg.success) {
           $("div#addingUser").css("display", "none");
           $("span#message")
             .css("color", "green")
             .css("font-size", 24)
             .css("font-weight", "bold")
             .text("کاربر ایجاد شد!");
+        } else if (!msg.error && msg.dup) {
+          $("span#message")
+            .css("color", "red")
+            .css("font-size", 24)
+            .css("font-weight", "bold")
+            .text("کاربر تکراری!");
         } else {
           $("span#message")
             .css("color", "red")

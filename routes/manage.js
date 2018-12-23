@@ -98,23 +98,29 @@ router.post("/addPlace", authenticate, (req, res) => {
 });
 
 router.post("/addUser", authenticate, (req, res) => {
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(req.body.password, salt, (err, hash) => {
-      let newUser = new User({
-        username: req.body.username,
-        password: hash
-      });
+  User.find({ username: req.body.username }).then(docs => {
+    if (docs.length == 0) {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(req.body.password, salt, (err, hash) => {
+          let newUser = new User({
+            username: req.body.username,
+            password: hash
+          });
 
-      newUser
-        .save()
-        .then(() => {
-          res.send({ errpr: null, success: true });
-        })
-        .catch(err => {
-          console.error(err);
-          res.status(400).send({ error: err });
+          newUser
+            .save()
+            .then(() => {
+              res.send({ error: null, dup: false, success: true });
+            })
+            .catch(err => {
+              console.error(err);
+              res.status(400).send({ error: err });
+            });
         });
-    });
+      });
+    } else {
+      res.send({ error: null, dup: true, success: false });
+    }
   });
 });
 
