@@ -2,10 +2,12 @@ $(function() {
   $("button#addplace").click(function() {
     $("div#addingPlace").css("display", "block");
     $("div#addingUser").css("display", "none");
+    $("span#message").text("");
   });
   $("button#adduser").click(function() {
     $("div#addingUser").css("display", "block");
     $("div#addingPlace").css("display", "none");
+    $("span#message").text("");
   });
 
   // Send ajax request for create place
@@ -92,7 +94,6 @@ $(function() {
         academic: $("#addingUser #academic:checked").val()
       },
       success: function(msg) {
-        // console.log(msg);
         if (!msg.error) {
           $("div#addingUser").css("display", "none");
           $("span#message")
