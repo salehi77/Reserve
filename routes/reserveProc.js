@@ -116,7 +116,7 @@ router.post("/rsv", (req, res) => {
       async function f() {
         let request = await Request.findOne({ ID: req.query.requestID });
 
-        if (request.personDetail === undefined) {
+        if (request === undefined || request.personDetail === undefined) {
           res.redirect(
             "/reserveProc/rsv?step=4&requestID=" + req.query.requestID
           );

@@ -1,12 +1,112 @@
+function fillTable(data) {
+  var table = $("table#places").empty();
+  table.append(
+    "<tr><th>شناسه</th><th>تاریخ ثبت رزرو</th><th>دانشگاهی</th><th>نام/شماره کاربر</th><th>شماره ثابت</th><th>شماره همراه</th><th>موضوع برنامه</th><th>سطح برنامه</th><th>محل رزرو</th><th>تاریخ رزرو</th><th>زمان رزرو</th></tr>"
+  );
+
+  for (var i = 0; i < data.length; ++i) {
+    var requestDate = new persianDate(new Date(data[i].requestDate));
+    var level = data[i].planDetail.level;
+    level =
+      level == "int"
+        ? "بین المللی"
+        : level == "nat"
+        ? "ملی"
+        : level == "reg"
+        ? "منطقه ای"
+        : level == "prov"
+        ? "استانی"
+        : "سایر";
+
+    var cell =
+      "<td>" +
+      data[i].ID +
+      "</td>" +
+      "<td>" +
+      (requestDate.hour() + ":" + requestDate.minute()) +
+      " - " +
+      (requestDate.year() +
+        "/" +
+        requestDate.month() +
+        "/" +
+        requestDate.date()) +
+      "</td>" +
+      "<td>" +
+      (data[i].academic == "academic" ? "بله" : "خیر") +
+      "</td>" +
+      "<td>" +
+      data[i].personDetail.username +
+      "</td>" +
+      "<td>" +
+      data[i].personDetail.telNumber +
+      "</td>" +
+      "<td>" +
+      data[i].personDetail.mobNumber +
+      "</td>" +
+      "<td>" +
+      data[i].planDetail.subject +
+      "</td>" +
+      "<td>" +
+      level +
+      "</td>" +
+      "<td>" +
+      data[i].place +
+      "</td>" +
+      "<td>" +
+      (data[i].date.year + "/" + data[i].date.month + "/" + data[i].date.date) +
+      "</td>" +
+      "<td>" +
+      (data[i].time.hourFrom +
+        ":" +
+        data[i].time.minFrom +
+        " تا " +
+        data[i].time.hourTo +
+        ":" +
+        data[i].time.minTo) +
+      "</td>";
+    table.append("<tr>" + cell + "</tr>");
+  }
+}
+
 $(function() {
   $("button#addplace").click(function() {
     $("div#addingPlace").css("display", "block");
     $("div#addingUser").css("display", "none");
+    $("div#reserveList").css("display", "none");
     $("span#message").text("");
   });
   $("button#adduser").click(function() {
-    $("div#addingUser").css("display", "block");
     $("div#addingPlace").css("display", "none");
+    $("div#addingUser").css("display", "block");
+    $("div#reserveList").css("display", "none");
+    $("span#message").text("");
+  });
+  $("button#showReserves").click(function() {
+    $("div#addingUser").css("display", "none");
+    $("div#addingPlace").css("display", "none");
+    $("div#reserveList").css("display", "block");
+
+    var urlParams = new URLSearchParams(window.location.search);
+
+    $.ajax({
+      type: "GET",
+      beforeSend: function(request) {
+        request.setRequestHeader("x-auth", urlParams.get("auth"));
+      },
+      url: "/manage//reserveList",
+      success: function(msg) {
+        if (!msg.error) {
+          fillTable(msg.docs);
+        } else {
+          $("span#message")
+            .css("color", "red")
+            .css("font-size", 24)
+            .css("font-weight", "bold")
+            .text("دوباره تلاش کنید!");
+        }
+      }
+    });
+
     $("span#message").text("");
   });
 

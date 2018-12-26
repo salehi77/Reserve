@@ -1,13 +1,16 @@
 extends layout
 
 block header
+  link(rel='stylesheet', href='/stylesheets/place-list.css')
   script(src="/javascripts/jquery.min.js")
+  script(src="/javascripts/persian-date.min.js")
   script(src="/javascripts/manage-page.js")
 
 block content
 
   button#addplace اضافه کردن فضا
   button#adduser اضافه کردن کاربر
+  button#showReserves لیست رزروها
   span#message
 
   div#content
@@ -75,6 +78,8 @@ block content
 
       button#createUser ابجاد
 
+    div#reserveList(style='display:block;')
+      table#places
 
   br
 

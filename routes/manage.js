@@ -7,6 +7,7 @@ const router = express.Router();
 const Place = require("./../database/models/place");
 const Admin = require("../database/models/admin");
 const User = require("../database/models/user");
+const Request = require("../database/models/request");
 
 const superSecret = "123abc";
 
@@ -122,6 +123,28 @@ router.post("/addUser", authenticate, (req, res) => {
       res.send({ error: null, dup: true, success: false });
     }
   });
+});
+
+router.get("/reserveList", authenticate, (req, res) => {
+  // console.log(req.query);
+
+  Request.find({})
+    .select("-_id -__v")
+    .lean()
+    .then(docs => {
+      let f = async () => {
+        for (let i = 0; i < docs.length; ++i) {
+          let place = await Place.findOne({ ID: docs[i].placeID });
+          docs[i].place = place.name;
+        }
+        res.send({ error: null, docs });
+      };
+      f();
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(400).send({ error: err });
+    });
 });
 
 router.post("/addadmin", (req, res) => {
